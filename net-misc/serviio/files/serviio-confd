@@ -1,0 +1,11 @@
+# /etc/conf.d/serviio
+
+# Location of serviio.sh
+SERVIIO_CMD=/opt/serviio/bin/serviio.sh
+
+# The user Serviio should run under
+SERVIIO_USER=serviio
+
+SERVIIO_REAL_HOME=/var/lib/serviio
+SERVIIO_BOUND_ADDR=192.168.1.1
+SERVIIO_REMOTE_HOST=192.168.1.1

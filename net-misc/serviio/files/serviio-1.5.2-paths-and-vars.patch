@@ -1,0 +1,37 @@
+diff -urN a/bin/serviio.sh b/bin/serviio.sh
+--- a/bin/serviio.sh	2015-12-27 19:41:57.431146867 +0300
++++ b/bin/serviio.sh	2015-12-27 19:28:56.118712933 +0300
+@@ -54,7 +54,10 @@
+ SERVIIO_CLASS_PATH="$SERVIIO_HOME/lib/*:$SERVIIO_HOME/config"
+ 
+ # Setup Serviio specific properties
+-JAVA_OPTS="-Djava.net.preferIPv4Stack=true -Djava.awt.headless=true -Dorg.restlet.engine.loggerFacadeClass=org.restlet.ext.slf4j.Slf4jLoggerFacade -Dderby.system.home=$SERVIIO_HOME/library -Dserviio.home=$SERVIIO_HOME -Dffmpeg.location=ffmpeg -Ddcraw.location=dcraw"
++JAVA_OPTS="-Djava.net.preferIPv4Stack=true -Djava.awt.headless=true -Dorg.restlet.engine.loggerFacadeClass=org.restlet.ext.slf4j.Slf4jLoggerFacade -Dderby.system.home=$SERVIIO_REAL_HOME/library -Dserviio.home=$SERVIIO_REAL_HOME -Dffmpeg.location=ffmpeg -Ddcraw.location=dcraw"
++
++JAVA_OPTS="$JAVA_OPTS -Dserviio.boundAddr=$SERVIIO_BOUND_ADDR -Dserviio.remoteHost=$SERVIIO_REMOTE_HOST -Dserviio.advertisementDuration=900"
++
+ 
+ # For Cygwin, switch paths to Windows format before running java
+ if $cygwin; then
+@@ -64,6 +67,5 @@
+ fi
+ 
+ # Execute the JVM in the foreground
+-exec "$JAVA" -Xmx512M -Xms20M -XX:+UseG1GC -XX:GCTimeRatio=1 -XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=20 $JAVA_OPTS -classpath "$SERVIIO_CLASS_PATH" org.serviio.MediaServer "$@"         
+-
++exec "$JAVA" -Xmx512M -Xms20M -XX:+UseG1GC -XX:GCTimeRatio=1 -XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=20 $JAVA_OPTS -classpath "$SERVIIO_CLASS_PATH" org.serviio.MediaServer "$@"
+ 
+diff -urN a/config/log4j.xml b/config/log4j.xml
+--- a/config/log4j.xml	2015-12-27 19:41:37.631254132 +0300
++++ b/config/log4j.xml	2015-12-27 19:40:54.031490332 +0300
+@@ -12,8 +12,8 @@
+ 	 <appender name="FILE" class="org.apache.log4j.RollingFileAppender">
+ 	 	<param name="Threshold" value="DEBUG"/>
+ 	 	<param name="Append" value="true" />
+-		<param name="File" value="${serviio.home}/log/serviio.log" />
+-		<param name="MaxFileSize" value="500KB" />
++		<param name="File" value="/var/log/serviio/serviio.log" />
++		<param name="MaxFileSize" value="50MB" />
+ 		<param name="MaxBackupIndex" value="5" />	
+ 		<param name="Encoding" value="UTF-8" />	
+ 		<layout class="org.apache.log4j.PatternLayout">

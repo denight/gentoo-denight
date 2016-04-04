@@ -1,0 +1,32 @@
+#!/sbin/runscript
+# Copyright 1999-2012 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+depend() {
+	need net
+}
+
+start() {
+	ebegin "Starting Serviio Media Server"
+	export SERVIIO_REAL_HOME
+	export SERVIIO_BOUND_ADDR
+	export SERVIIO_REMOTE_HOST
+
+	start-stop-daemon --start \
+		--exec ${SERVIIO_CMD} \
+		--user ${SERVIIO_USER} \
+		--background \
+		--make-pidfile \
+		--pidfile /run/serviio.pid
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping Serviio Media Server"
+	local pid=`cat /run/serviio.pid`
+	${SERVIIO_CMD} -stop
+	timeout 5s bash -norc -c wait $pid
+	start-stop-daemon --stop --retry 5 --pidfile /run/serviio.pid
+	eend $?
+}
