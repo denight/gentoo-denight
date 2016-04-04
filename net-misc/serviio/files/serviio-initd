@@ -12,6 +12,7 @@ start() {
 	export SERVIIO_REAL_HOME
 	export SERVIIO_BOUND_ADDR
 	export SERVIIO_REMOTE_HOST
+	export SERVIIO_OPTS
 
 	start-stop-daemon --start \
 		--exec ${SERVIIO_CMD} \

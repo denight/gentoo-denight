@@ -1,19 +1,18 @@
-diff -urN a/bin/serviio.sh b/bin/serviio.sh
---- a/bin/serviio.sh	2015-12-27 19:41:57.431146867 +0300
-+++ b/bin/serviio.sh	2015-12-27 19:28:56.118712933 +0300
-@@ -54,7 +54,10 @@
+diff -urN /var/tmp/portage/net-misc/serviio-1.6.1/work/serviio-1.6.1/bin/serviio.sh temp/serviio-1.6.1/bin/serviio.sh
+--- /var/tmp/portage/net-misc/serviio-1.6.1/work/serviio-1.6.1/bin/serviio.sh	2016-03-28 23:38:40.000000000 +0300
++++ temp/serviio-1.6.1/bin/serviio.sh	2016-04-04 22:36:40.237463455 +0300
+@@ -54,7 +54,9 @@
  SERVIIO_CLASS_PATH="$SERVIIO_HOME/lib/*:$SERVIIO_HOME/config"
  
  # Setup Serviio specific properties
 -JAVA_OPTS="-Djava.net.preferIPv4Stack=true -Djava.awt.headless=true -Dorg.restlet.engine.loggerFacadeClass=org.restlet.ext.slf4j.Slf4jLoggerFacade -Dderby.system.home=$SERVIIO_HOME/library -Dserviio.home=$SERVIIO_HOME -Dffmpeg.location=ffmpeg -Ddcraw.location=dcraw"
 +JAVA_OPTS="-Djava.net.preferIPv4Stack=true -Djava.awt.headless=true -Dorg.restlet.engine.loggerFacadeClass=org.restlet.ext.slf4j.Slf4jLoggerFacade -Dderby.system.home=$SERVIIO_REAL_HOME/library -Dserviio.home=$SERVIIO_REAL_HOME -Dffmpeg.location=ffmpeg -Ddcraw.location=dcraw"
 +
-+JAVA_OPTS="$JAVA_OPTS -Dserviio.boundAddr=$SERVIIO_BOUND_ADDR -Dserviio.remoteHost=$SERVIIO_REMOTE_HOST -Dserviio.advertisementDuration=900"
-+
++JAVA_OPTS="$JAVA_OPTS -Dserviio.boundAddr=$SERVIIO_BOUND_ADDR -Dserviio.remoteHost=$SERVIIO_REMOTE_HOST -Dserviio.advertisementDuration=900 $SERVIIO_OPTS"
  
  # For Cygwin, switch paths to Windows format before running java
  if $cygwin; then
-@@ -64,6 +67,5 @@
+@@ -64,6 +66,5 @@
  fi
  
  # Execute the JVM in the foreground
@@ -21,9 +20,9 @@ diff -urN a/bin/serviio.sh b/bin/serviio.sh
 -
 +exec "$JAVA" -Xmx512M -Xms20M -XX:+UseG1GC -XX:GCTimeRatio=1 -XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=20 $JAVA_OPTS -classpath "$SERVIIO_CLASS_PATH" org.serviio.MediaServer "$@"
  
-diff -urN a/config/log4j.xml b/config/log4j.xml
---- a/config/log4j.xml	2015-12-27 19:41:37.631254132 +0300
-+++ b/config/log4j.xml	2015-12-27 19:40:54.031490332 +0300
+diff -urN /var/tmp/portage/net-misc/serviio-1.6.1/work/serviio-1.6.1/config/log4j.xml temp/serviio-1.6.1/config/log4j.xml
+--- /var/tmp/portage/net-misc/serviio-1.6.1/work/serviio-1.6.1/config/log4j.xml	2016-03-28 23:38:40.000000000 +0300
++++ temp/serviio-1.6.1/config/log4j.xml	2016-04-04 22:29:44.084151015 +0300
 @@ -12,8 +12,8 @@
  	 <appender name="FILE" class="org.apache.log4j.RollingFileAppender">
  	 	<param name="Threshold" value="DEBUG"/>
@@ -35,3 +34,15 @@ diff -urN a/config/log4j.xml b/config/log4j.xml
  		<param name="MaxBackupIndex" value="5" />	
  		<param name="Encoding" value="UTF-8" />	
  		<layout class="org.apache.log4j.PatternLayout">
+diff -urN /var/tmp/portage/net-misc/serviio-1.6.1/work/serviio-1.6.1/library/derby.properties temp/serviio-1.6.1/library/derby.properties
+--- /var/tmp/portage/net-misc/serviio-1.6.1/work/serviio-1.6.1/library/derby.properties	2015-01-13 02:14:17.000000000 +0300
++++ temp/serviio-1.6.1/library/derby.properties	2016-04-04 22:34:25.020803577 +0300
+@@ -1,5 +1,5 @@
+-derby.stream.error.file=../log/derby.log
++derby.stream.error.file=/var/log/serviio/derby.log
+ derby.storage.pageSize=8192
+ derby.storage.pageCacheSize=3000
+ derby.language.logQueryPlan=false
+-derby.locks.monitor=true
+\ В конце файла нет новой строки
++derby.locks.monitor=true
