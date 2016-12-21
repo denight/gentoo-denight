@@ -25,16 +25,16 @@ DOCS="LICENCE.txt NOTICE.txt README.txt RELEASE_NOTES.txt"
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
-    epatch "${FILESDIR}/${PN}-gentoo-1.patch"
+	epatch "${FILESDIR}/${PN}-gentoo-1.patch"
 }
 
 src_install() {
 	into "/opt/${PN}"
-    for x in ${S}/bin/*; do
+	for x in ${S}/bin/*; do
 		dobin "${x}"
 	done
 
-    insinto "/opt/${PN}/lib"
+	insinto "/opt/${PN}/lib"
 	for x in ${S}/lib/*; do
 		doins "${x}"
 	done
@@ -66,7 +66,7 @@ src_install() {
 	fperms  0700 "/var/log/${PN}"
 
 	newinitd "${FILESDIR}/${PN}-initd" "${PN}"
-    newconfd "${FILESDIR}/${PN}-confd" "${PN}"
+	newconfd "${FILESDIR}/${PN}-confd" "${PN}"
 }
 
 pkg_preinst() {
