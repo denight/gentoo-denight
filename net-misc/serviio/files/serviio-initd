@@ -1,4 +1,4 @@
-#!/sbin/runscript
+#!/sbin/openrc-run
 # Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
@@ -27,7 +27,7 @@ stop() {
 	ebegin "Stopping Serviio Media Server"
 	local pid=`cat /run/serviio.pid`
 	${SERVIIO_CMD} -stop
-	timeout 5s bash -norc -c wait $pid
+	timeout 90s bash -norc -c wait $pid
 	start-stop-daemon --stop --retry 5 --pidfile /run/serviio.pid
 	eend $?
 }
