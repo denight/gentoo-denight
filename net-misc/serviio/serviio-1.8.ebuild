@@ -15,7 +15,7 @@ SLOT="0"
 RESTRICT="mirror"
 KEYWORDS="~amd64 ~x86"
 
-RDEPEND=">=virtual/jre-1.8
+RDEPEND=">=virtual/jdk-1.8
 	>=virtual/ffmpeg-9
 "
 DEPEND=""
