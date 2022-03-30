@@ -16,7 +16,7 @@ RESTRICT="mirror"
 KEYWORDS="~amd64 ~x86"
 
 RDEPEND=">=virtual/jdk-1.8
-	>=virtual/ffmpeg-9
+	>=media-video/ffmpeg-4.2.4-r1
 "
 DEPEND=""
 DOCS="LICENCE.txt NOTICE.txt README.txt RELEASE_NOTES.txt"
