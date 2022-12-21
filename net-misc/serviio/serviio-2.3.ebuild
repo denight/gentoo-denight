@@ -2,9 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI="6"
-
-inherit eutils user
+EAPI=8
 
 DESCRIPTION="The serviio media streaming server."
 HOMEPAGE="http://serviio.org/"
@@ -25,7 +23,7 @@ DOCS="LICENCE.txt NOTICE.txt README.txt RELEASE_NOTES.txt"
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
-	epatch "${FILESDIR}/${PN}-gentoo-4.patch"
+	eapply "${FILESDIR}/${PN}-gentoo-4.patch"
 }
 
 src_install() {
