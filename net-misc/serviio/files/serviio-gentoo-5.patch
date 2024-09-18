@@ -1,0 +1,40 @@
+diff '--color=auto' -ru a/bin/serviio.sh b/bin/serviio.sh
+--- a/bin/serviio.sh	2024-06-05 16:28:29.000000000 +0300
++++ b/bin/serviio.sh	2024-09-18 22:37:09.610100033 +0300
+@@ -54,7 +54,7 @@
+ SERVIIO_CLASS_PATH="$SERVIIO_HOME/lib/*:$SERVIIO_HOME/config"
+ 
+ # Setup Serviio specific properties
+-SERVIIO_JAVA_OPTS="-Djava.net.preferIPv4Stack=true -Djava.awt.headless=true -Dorg.restlet.engine.loggerFacadeClass=org.restlet.ext.slf4j.Slf4jLoggerFacade -Dderby.system.home=$SERVIIO_HOME/library -Dserviio.home=$SERVIIO_HOME -Dffmpeg.location=ffmpeg -Ddcraw.location=dcraw"
++SERVIIO_JAVA_OPTS="-Djava.net.preferIPv4Stack=true -Djava.awt.headless=true -Dorg.restlet.engine.loggerFacadeClass=org.restlet.ext.slf4j.Slf4jLoggerFacade -Dderby.system.home=$SERVIIO_REAL_HOME/library -Dserviio.home=$SERVIIO_REAL_HOME -Dffmpeg.location=ffmpeg -Ddcraw.location=dcraw"
+ if [ "x$JAVA_OPTS" = "x" ]; then
+   JAVA_OPTS=$SERVIIO_JAVA_OPTS
+ else
+diff '--color=auto' -ru a/config/log4j2.xml b/config/log4j2.xml
+--- a/config/log4j2.xml	2024-06-05 16:28:29.000000000 +0300
++++ b/config/log4j2.xml	2024-09-18 22:04:08.297608040 +0300
+@@ -9,10 +9,10 @@
+ <Configuration>
+ 
+     <Appenders>
+-        <RollingFile name="FILE" fileName="${sys:serviio.home}/log/serviio.log" filePattern="${sys:serviio.home}/log/serviio.log.%i">
++        <RollingFile name="FILE" fileName="/var/log/serviio/serviio.log" filePattern="/var/log/serviio/serviio.log.%i">
+             <PatternLayout pattern="%d{ISO8601} %-5p [%c{1}] %m%n" />
+             <Policies>
+-                <SizeBasedTriggeringPolicy size="5000KB" />
++                <SizeBasedTriggeringPolicy size="50MB" />
+             </Policies>
+             <DefaultRolloverStrategy max="5" fileIndex="min" />
+         </RollingFile>
+diff '--color=auto' -ru a/library/derby.properties b/library/derby.properties
+--- a/library/derby.properties	2020-05-03 15:51:15.000000000 +0300
++++ b/library/derby.properties	2024-09-18 22:04:08.300941337 +0300
+@@ -1,5 +1,5 @@
+-derby.stream.error.file=../log/derby.log
++derby.stream.error.file=/var/log/serviio/derby.log
+ derby.storage.pageSize=8192
+ derby.storage.pageCacheSize=3000
+ derby.language.logQueryPlan=false
+-derby.locks.monitor=true
+\ В конце файла нет новой строки
++derby.locks.monitor=true
